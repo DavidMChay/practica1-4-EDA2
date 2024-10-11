@@ -1,7 +1,45 @@
+class Node {
+    constructor(data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+        this.length = 0;
+    }
+
+    add(data) {
+        const newNode = new Node(data);
+        if (this.head === null) {
+            this.head = newNode;
+        } else {
+            let current = this.head;
+            while (current.next !== null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+        this.length++;
+    }
+
+    toArray() {
+        let arr = [];
+        let current = this.head;
+        while (current !== null) {
+            arr.push(current.data);
+            current = current.next;
+        }
+        return arr;
+    }
+}
+
 function generateRandomNumbers(count) {
-    let numbers = [];
+    const numbers = new LinkedList();
     for (let i = 0; i < count; i++) {
-        numbers.push(Math.floor(Math.random() * 100));
+        numbers.add(Math.floor(Math.random() * 100));
     }
     return numbers;
 }
@@ -9,28 +47,24 @@ function generateRandomNumbers(count) {
 function displayNumbers(numbers) {
     const randomList = $('#randomNumbers');
     randomList.empty();
-    numbers.forEach(number => {
+    numbers.toArray().forEach(number => {
         randomList.append(`<li class="list-group-item">${number}</li>`);
     });
 }
 
 function separateEvenAndOdd(numbers) {
-    const evenNumbers = [];
-    const oddNumbers = [];
-    
-    function recursiveSeparation(index) {
-        if (index >= numbers.length) {
-            return;
-        }
-        if (numbers[index] % 2 === 0) {
-            evenNumbers.push(numbers[index]);
+    const evenNumbers = new LinkedList();
+    const oddNumbers = new LinkedList();
+
+    let current = numbers.head;
+    while (current !== null) {
+        if (current.data % 2 === 0) {
+            evenNumbers.add(current.data);
         } else {
-            oddNumbers.push(numbers[index]);
+            oddNumbers.add(current.data);
         }
-        recursiveSeparation(index + 1);
+        current = current.next;
     }
-    
-    recursiveSeparation(0);
     return { evenNumbers, oddNumbers };
 }
 
@@ -41,11 +75,11 @@ function displaySeparatedNumbers(evenNumbers, oddNumbers) {
     evenList.empty();
     oddList.empty();
 
-    evenNumbers.forEach(number => {
+    evenNumbers.toArray().forEach(number => {
         evenList.append(`<li class="list-group-item">${number}</li>`);
     });
 
-    oddNumbers.forEach(number => {
+    oddNumbers.toArray().forEach(number => {
         oddList.append(`<li class="list-group-item">${number}</li>`);
     });
 }
@@ -56,6 +90,6 @@ $(document).ready(() => {
         displayNumbers(randomNumbers);
         
         const { evenNumbers, oddNumbers } = separateEvenAndOdd(randomNumbers);
-        displaySeparatedNumbers(evenNumbers, oddNumbers);
+        displaySeparatedNumbers(evenNumbers, oddNumbers); 
     });
 });
