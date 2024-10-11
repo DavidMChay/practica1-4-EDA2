@@ -1,0 +1,22 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    color: #28A745;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-success {
+    background-color: #28A745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
