@@ -1,0 +1,31 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    color: #28A745;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-success {
+    background-color: #28A745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
