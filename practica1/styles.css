@@ -1,0 +1,22 @@
+body {
+    font-family: 'Kanit', sans-serif;
+}
+
+h1 {
+    color: rgb(141, 24, 24);
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-primary {
+    background-color: #4A90E2;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #357ABD;
+}
