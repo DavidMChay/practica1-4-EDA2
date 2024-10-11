@@ -47,14 +47,12 @@ class LinkedList {
         return null;
     }
 
-    toArray() {
-        let arr = [];
+    traverse(callback) {
         let current = this.head;
         while (current !== null) {
-            arr.push(current.data);
+            callback(current.data);
             current = current.next;
         }
-        return arr;
     }
 
     getTotalPrice() {
@@ -67,23 +65,10 @@ class LinkedList {
         return total;
     }
 
-    findIndex(key, comparisonCallback) {
-        let current = this.head;
-        let index = 0;
-
-        while (current !== null) {
-            if (comparisonCallback(current.data, key)) {
-                return index;
-            }
-            current = current.next;
-            index++;
-        }
-        return -1;
-    }
-
     sort(comparisonCallback) {
-        let current = this.head;
+        if (this.head === null) return;
 
+        let current = this.head;
         while (current !== null) {
             let nextNode = current.next;
             while (nextNode !== null) {
@@ -143,10 +128,12 @@ function removeProduct() {
 function displayProducts() {
     const productList = $('#productList');
     productList.empty();
-    
+
+    // Ordenar los productos utilizando el método sort con comparación
     products.sort((a, b) => a.name.localeCompare(b.name));
 
-    products.toArray().forEach(product => {
+    // Recorrer la lista enlazada directamente con traverse
+    products.traverse((product) => {
         productList.append(`
             <li class="list-group-item">
                 ${product.name} - $${product.price.toFixed(2)}

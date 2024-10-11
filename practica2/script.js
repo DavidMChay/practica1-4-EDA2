@@ -25,14 +25,12 @@ class LinkedList {
         this.length++;
     }
 
-    toArray() {
-        let arr = [];
+    traverse(callback) {
         let current = this.head;
         while (current !== null) {
-            arr.push(current.data);
+            callback(current.data);
             current = current.next;
         }
-        return arr;
     }
 }
 
@@ -47,7 +45,8 @@ function generateRandomNumbers(count) {
 function displayNumbers(numbers) {
     const randomList = $('#randomNumbers');
     randomList.empty();
-    numbers.toArray().forEach(number => {
+    
+    numbers.traverse((number) => {
         randomList.append(`<li class="list-group-item">${number}</li>`);
     });
 }
@@ -75,11 +74,11 @@ function displaySeparatedNumbers(evenNumbers, oddNumbers) {
     evenList.empty();
     oddList.empty();
 
-    evenNumbers.toArray().forEach(number => {
+    evenNumbers.traverse((number) => {
         evenList.append(`<li class="list-group-item">${number}</li>`);
     });
 
-    oddNumbers.toArray().forEach(number => {
+    oddNumbers.traverse((number) => {
         oddList.append(`<li class="list-group-item">${number}</li>`);
     });
 }
@@ -88,8 +87,8 @@ $(document).ready(() => {
     $('#generateNumbers').click(() => {
         const randomNumbers = generateRandomNumbers(10);
         displayNumbers(randomNumbers);
-        
+
         const { evenNumbers, oddNumbers } = separateEvenAndOdd(randomNumbers);
-        displaySeparatedNumbers(evenNumbers, oddNumbers); 
+        displaySeparatedNumbers(evenNumbers, oddNumbers);
     });
 });

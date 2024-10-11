@@ -25,14 +25,12 @@ class LinkedList {
         this.length++;
     }
 
-    toArray() {
-        let arr = [];
+    traverse(callback) {
         let current = this.head;
         while (current !== null) {
-            arr.push(current.data);
+            callback(current.data);
             current = current.next;
         }
-        return arr;
     }
 
     filter(callback) {
@@ -55,6 +53,7 @@ class Student {
     }
 }
 
+// Implementación de listas enlazadas para los estudiantes
 let students = new LinkedList();
 let failedStudents = new LinkedList();
 
@@ -65,17 +64,17 @@ function addStudent() {
     if (name && !isNaN(grade)) {
         const student = new Student(name, grade);
         students.add(student);
-        $('#studentName').val('');
-        $('#studentGrade').val('');
-        separateStudents();
-        displayStudents(); 
+        $('#studentName').val(''); // Limpiar el campo de nombre
+        $('#studentGrade').val(''); // Limpiar el campo de calificación
+        separateStudents(); // Clasificar a los estudiantes
+        displayStudents();  // Mostrar los estudiantes en la interfaz
     } else {
         alert('Por favor ingresa un nombre válido y una calificación.');
     }
 }
 
 function separateStudents() {
-    failedStudents = students.filter(student => student.grade < 8); 
+    failedStudents = students.filter(student => student.grade < 8);
 }
 
 function displayStudents() {
@@ -85,13 +84,15 @@ function displayStudents() {
     passedList.empty();
     failedList.empty();
 
-    students.toArray().forEach(student => {
+    // Mostrar estudiantes aprobados recorriendo la lista enlazada
+    students.traverse((student) => {
         if (student.grade >= 8) {
             passedList.append(`<li class="list-group-item">${student.name} - Calificación: ${student.grade}</li>`);
         }
     });
 
-    failedStudents.toArray().forEach(student => {
+    // Mostrar estudiantes reprobados recorriendo la lista enlazada
+    failedStudents.traverse((student) => {
         failedList.append(`<li class="list-group-item">${student.name} - Calificación: ${student.grade}</li>`);
     });
 }

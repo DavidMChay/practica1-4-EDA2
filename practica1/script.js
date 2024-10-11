@@ -44,14 +44,29 @@ class LinkedList {
         return current.data;
     }
 
-    toArray() {
-        let arr = [];
+    traverse(callback) {
+        let current = this.head;
+        let index = 0;
+        while (current !== null) {
+            callback(current.data, index);
+            current = current.next;
+            index++;
+        }
+    }
+
+    find(callback) {
         let current = this.head;
         while (current !== null) {
-            arr.push(current.data);
+            if (callback(current.data)) {
+                return current.data;
+            }
             current = current.next;
         }
-        return arr;
+        return null;
+    }
+
+    getLength() {
+        return this.length;
     }
 }
 
@@ -69,7 +84,7 @@ let removedProducts = new LinkedList();
 function generateProduct() {
     const quantity = Math.floor(Math.random() * 100) + 1;
     const price = (Math.random() * 100).toFixed(2);
-    const productName = `Producto ${availableProducts.length + 1}`;
+    const productName = `Producto ${availableProducts.getLength() + 1}`;
     return new Product(productName, quantity, price);
 }
 
@@ -91,7 +106,8 @@ function removeProduct(index) {
 function displayAvailableProducts() {
     const availableList = $('#availableProducts');
     availableList.empty();
-    availableProducts.toArray().forEach((product, index) => {
+
+    availableProducts.traverse((product, index) => {
         availableList.append(`
             <li class="list-group-item">
                 ${product.name} - Cantidad: ${product.quantity} - Precio: $${product.price}
@@ -104,7 +120,8 @@ function displayAvailableProducts() {
 function displayRemovedProducts() {
     const removedList = $('#removedProducts');
     removedList.empty();
-    removedProducts.toArray().forEach((product) => {
+
+    removedProducts.traverse((product) => {
         removedList.append(`
             <li class="list-group-item">
                 ${product.name} - Cantidad: ${product.quantity} - Precio: $${product.price}
